@@ -18,3 +18,11 @@ pub fn setup_pid_namespace(enabled: bool) -> Result<()> {
 
     Ok(())
 }
+
+pub fn setup_mount_namespace(enabled: bool) -> Result<()> {
+    if enabled {
+        unshare(CloneFlags::CLONE_NEWNS)?;
+    }
+
+    Ok(())
+}

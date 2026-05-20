@@ -1,5 +1,5 @@
 use crate::cli::RunArgs;
-use crate::container::namespaces;
+use crate::container::{namespaces, rootfs};
 use anyhow::{bail, Result};
 use std::process::Command;
 
@@ -10,6 +10,11 @@ pub fn run(args: RunArgs) -> Result<()> {
 
     namespaces::setup_uts_namespace(args.hostname.as_deref())?;
     namespaces::setup_pid_namespace(args.pid)?;
+    namespaces::setup_mount_namespace(args.mount_proc)?;
+
+    if args.mount_proc {
+        rootfs::mount_proc()?;
+    }
 
     let program = &args.command[0];
     let program_args = &args.command[1..];

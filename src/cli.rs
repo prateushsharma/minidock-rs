@@ -21,6 +21,9 @@ pub struct RunArgs {
     #[arg(long)]
     pub pid: bool,
 
+    #[arg(long)]
+    pub mount_proc: bool,
+
     #[arg(required = true, trailing_var_arg = true)]
     pub command: Vec<String>,
 }
