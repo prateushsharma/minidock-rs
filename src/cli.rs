@@ -24,6 +24,9 @@ pub struct RunArgs {
     #[arg(long)]
     pub mount_proc: bool,
 
+    #[arg(long)]
+    pub rootfs: Option<String>,
+
     #[arg(required = true, trailing_var_arg = true)]
     pub command: Vec<String>,
 }

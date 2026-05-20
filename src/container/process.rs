@@ -10,7 +10,9 @@ pub fn run(args: RunArgs) -> Result<()> {
 
     namespaces::setup_uts_namespace(args.hostname.as_deref())?;
     namespaces::setup_pid_namespace(args.pid)?;
-    namespaces::setup_mount_namespace(args.mount_proc)?;
+    namespaces::setup_mount_namespace(args.mount_proc || args.rootfs.is_some())?;
+
+    rootfs::change_root(args.rootfs.as_deref())?;
 
     if args.mount_proc {
         rootfs::mount_proc()?;
