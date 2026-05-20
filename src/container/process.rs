@@ -1,4 +1,5 @@
 use crate::cli::RunArgs;
+use crate::container::namespaces;
 use anyhow::{bail, Result};
 use std::process::Command;
 
@@ -7,12 +8,12 @@ pub fn run(args: RunArgs) -> Result<()> {
         bail!("no command provided");
     }
 
+    namespaces::setup_uts_namespace(args.hostname.as_deref())?;
+
     let program = &args.command[0];
     let program_args = &args.command[1..];
 
-    let status = Command::new(program)
-        .args(program_args)
-        .status()?;
+    let status = Command::new(program).args(program_args).status()?;
 
     if let Some(code) = status.code() {
         std::process::exit(code);
