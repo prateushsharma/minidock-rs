@@ -10,3 +10,11 @@ pub fn setup_uts_namespace(hostname: Option<&str>) -> Result<()> {
 
     Ok(())
 }
+
+pub fn setup_pid_namespace(enabled: bool) -> Result<()> {
+    if enabled {
+        unshare(CloneFlags::CLONE_NEWPID)?;
+    }
+
+    Ok(())
+}

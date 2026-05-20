@@ -9,6 +9,7 @@ pub fn run(args: RunArgs) -> Result<()> {
     }
 
     namespaces::setup_uts_namespace(args.hostname.as_deref())?;
+    namespaces::setup_pid_namespace(args.pid)?;
 
     let program = &args.command[0];
     let program_args = &args.command[1..];

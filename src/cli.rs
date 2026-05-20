@@ -18,6 +18,9 @@ pub struct RunArgs {
     #[arg(long)]
     pub hostname: Option<String>,
 
+    #[arg(long)]
+    pub pid: bool,
+
     #[arg(required = true, trailing_var_arg = true)]
     pub command: Vec<String>,
 }
